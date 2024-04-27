@@ -14,6 +14,7 @@
 
 - [x] Cries
 - [x] Shiny chance
+	- [ ] Shiny sound effect
 - [ ] Team generator
 	- [ ] select number of Pokemon to generate in the team 
 
