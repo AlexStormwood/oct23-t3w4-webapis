@@ -36,6 +36,15 @@ async function putDataOnPage(dataToDisplay){
 	}
 	
 
+	// Wishlist: add random chance to select front_shiny instead of front_default
+	let imageContainer = document.getElementsByClassName("pokemonImage")[0];
+	let imageElement = imageContainer.getElementsByTagName("IMG")[0];
+	imageElement.src = dataToDisplay.sprites.front_default;
+
+	// document.querySelector(".pokemonImage img").src = dataToDisplay.sprites.front_default;
+
+
+
 }
 
 // Button calls this
