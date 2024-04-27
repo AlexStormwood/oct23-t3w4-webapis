@@ -91,3 +91,132 @@ document.getElementById("create-encounter").addEventListener("click", getAndDisp
 // let pokemonButton = document.getElementById("create-encounter");
 // pokemonButton.addEventListener("click", getAndDisplayPokemonData);
 
+
+async function generateTeamData(){
+	
+
+
+	// let teamArray = [];
+	// for (let index = 0; index < 6; index++) {
+	// 	let data = await getPokemonData();
+	// 	teamArray.push(data);		
+	// }
+	// teamArray = promiseAllResult;
+
+
+	let promiseAllResult = await Promise.all([
+		getPokemonData(),
+		getPokemonData(),
+		getPokemonData(),
+		getPokemonData(),
+		getPokemonData(),
+		getPokemonData(),
+	]);
+
+
+
+	return promiseAllResult;
+}
+
+async function showTeamData(teamToDisplay){
+	let teamDisplaySection = document.getElementById("team-display");
+	teamDisplaySection.innerHTML = "";
+
+	teamToDisplay.forEach((pokemon) => {
+
+		let newPokemonCard = document.createElement("div");
+
+		// Pokemon Name
+		let pokemonNameTitle = document.createElement("h3");
+		pokemonNameTitle.textContent = pokemon.name;
+		newPokemonCard.appendChild(pokemonNameTitle);
+
+		// Pokemon image and shiny chance
+		let imageContainer = document.createElement("div");
+		let imageElement = document.createElement("img");
+		imageContainer.appendChild(imageElement);
+	
+		let oddsUpperLimit = 4;
+		let shinyResult = Math.floor(Math.random() * oddsUpperLimit) + 1;
+	
+		if (shinyResult == 1 ) {
+			imageElement.src = pokemon.sprites.front_shiny;
+			console.log("Shiny Pokemon found!");
+		} else {
+			imageElement.src = pokemon.sprites.front_default;
+		}
+		
+		newPokemonCard.appendChild(imageContainer);
+
+		// Pokemon types
+		let type1Display = document.createElement("div")
+		let type2Display = document.createElement("div");
+	
+		type1Display.textContent = "Type 1: " + pokemon.types[0].type.name;
+		// type1Display.textContent = data.types[0]["type"]["name"];
+	
+		if (pokemon.types[1]){
+			// if the data includes a 2nd type, set that as well 
+			type2Display.textContent = "Type 2: " + pokemon.types[1].type.name;
+		} else {
+			// if no 2nd type exists, reset the content in type2Display
+			type2Display.textContent = "Type 2: ";
+	
+		}
+
+		newPokemonCard.appendChild(type1Display);
+		newPokemonCard.appendChild(type2Display);
+
+
+		// Pokemon cry button
+		let cryURL = pokemon.cries.latest;
+		let pokemonAudioElement = document.createElement("audio");
+		pokemonAudioElement.src = cryURL;
+
+		let pokemonAudioPlayButton = document.createElement("button");
+		pokemonAudioPlayButton.textContent = "Play Sound";
+		pokemonAudioPlayButton.addEventListener("click", () => {
+			pokemonAudioElement.volume = 0.1;
+			pokemonAudioElement.play();
+		});
+
+		pokemonAudioPlayButton.appendChild(pokemonAudioElement);
+		newPokemonCard.appendChild(pokemonAudioPlayButton);
+
+
+
+
+		// Apply all content to page
+		teamDisplaySection.appendChild(newPokemonCard);
+	});
+}
+
+async function getAndShowTeamData(){
+	let teamData = await generateTeamData();
+	console.log(teamData);
+	showTeamData(teamData);	
+}
+
+document.getElementById("create-team").addEventListener("click", getAndShowTeamData);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
