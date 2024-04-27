@@ -126,12 +126,51 @@ async function showTeamData(teamToDisplay){
 
 		let newPokemonCard = document.createElement("div");
 
+		// Pokemon Name
 		let pokemonNameTitle = document.createElement("h3");
 		pokemonNameTitle.textContent = pokemon.name;
-
 		newPokemonCard.appendChild(pokemonNameTitle);
 
 
+		// Pokemon types
+		let type1Display = document.createElement("div")
+		let type2Display = document.createElement("div");
+	
+		type1Display.textContent = "Type 1: " + pokemon.types[0].type.name;
+		// type1Display.textContent = data.types[0]["type"]["name"];
+	
+		if (pokemon.types[1]){
+			// if the data includes a 2nd type, set that as well 
+			type2Display.textContent = "Type 2: " + pokemon.types[1].type.name;
+		} else {
+			// if no 2nd type exists, reset the content in type2Display
+			type2Display.textContent = "Type 2: ";
+	
+		}
+
+		newPokemonCard.appendChild(type1Display);
+		newPokemonCard.appendChild(type2Display);
+
+
+		// Pokemon cry button
+		let cryURL = pokemon.cries.latest;
+		let pokemonAudioElement = document.createElement("audio");
+		pokemonAudioElement.src = cryURL;
+
+		let pokemonAudioPlayButton = document.createElement("button");
+		pokemonAudioPlayButton.textContent = "Play Sound";
+		pokemonAudioPlayButton.addEventListener("click", () => {
+			pokemonAudioElement.volume = 0.1;
+			pokemonAudioElement.play();
+		});
+
+		pokemonAudioPlayButton.appendChild(pokemonAudioElement);
+		newPokemonCard.appendChild(pokemonAudioPlayButton);
+
+		// Pokemon image and shiny chance
+
+
+		// Apply all content to page
 		teamDisplaySection.appendChild(newPokemonCard);
 	});
 }
