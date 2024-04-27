@@ -37,9 +37,26 @@ async function putDataOnPage(dataToDisplay){
 	
 
 	// Wishlist: add random chance to select front_shiny instead of front_default
+
+	// Real odds are 1 in 8192 
+	// Testing/development odds are 1 in 4
+	// Generate random number between 1 and [odds upper limt]
+	// If number is 1, show shiny
+	// Else, show default
+
 	let imageContainer = document.getElementsByClassName("pokemonImage")[0];
 	let imageElement = imageContainer.getElementsByTagName("IMG")[0];
-	imageElement.src = dataToDisplay.sprites.front_default;
+
+	let shinyResult = Math.floor(Math.random() * 4) + 1;
+
+	if (shinyResult == 1 ) {
+		imageElement.src = dataToDisplay.sprites.front_shiny;
+		console.log("Shiny Pokemon found!");
+	} else {
+		imageElement.src = dataToDisplay.sprites.front_default;
+	}
+
+	
 
 	// document.querySelector(".pokemonImage img").src = dataToDisplay.sprites.front_default;
 
