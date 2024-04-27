@@ -14,13 +14,27 @@ async function getPokemonData(){
 	// 	return elephant.json();
 	// })
 	// result = promiseResponse;
-
 	return result;
 }
 
 async function putDataOnPage(dataToDisplay){
 	document.getElementsByClassName("pokemonName")[0].textContent = dataToDisplay.name;
 
+	let type1Display = document.getElementsByClassName("pokemonType1")[0];
+	let type2Display = document.getElementsByClassName("pokemonType2")[0];
+
+	type1Display.textContent = "Type 1: " + dataToDisplay.types[0].type.name;
+	// type1Display.textContent = data.types[0]["type"]["name"];
+
+	if (dataToDisplay.types[1]){
+		// if the data includes a 2nd type, set that as well 
+		type2Display.textContent = "Type 2: " + dataToDisplay.types[1].type.name;
+	} else {
+		// if no 2nd type exists, reset the content in type2Display
+		type2Display.textContent = "Type 2: ";
+
+	}
+	
 
 }
 
